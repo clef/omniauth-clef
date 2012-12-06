@@ -1,4 +1,5 @@
 require 'omniauth-oauth2'
+require 'pry'
 
 module OmniAuth
   module Strategies
@@ -7,7 +8,12 @@ module OmniAuth
       option :name, "Clef"
       option :client_options, {
         :site => 'https://clef.io/api/v1',
-        :token_url => '/authorize'
+        :token_url => 'authorize'
+      }
+      option :provider_ignores_state, true
+      option :auth_token_params, {
+        param_name: 'access_token',
+        mode: :query
       }
 
       uid { raw_info['id'] }
@@ -27,8 +33,13 @@ module OmniAuth
         prune! hash
       end
 
+      def build_access_token
+        verifier = request.params['code']
+        client.auth_code.get_token(verifier, {:redirect_uri => callback_url}.merge(token_params.to_hash(:symbolize_keys => true)), deep_symbolize(options.auth_token_params))
+      end
+
       def raw_info
-        @raw_info ||= access_token.get('/info').parsed || {}
+        @raw_info ||= access_token.get('info').parsed || {}
         @raw_info = @raw_info['info'] if !@raw_info['info'].nil?
         @raw_info
       end

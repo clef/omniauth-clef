@@ -104,24 +104,3 @@ class RawInfoTest < StrategyTestCase
     assert_kind_of Hash, strategy.raw_info
   end
 end
-
-class CredentialsTest < StrategyTestCase
-  def setup
-    super
-    @access_token = stub('OAuth2::AccessToken')
-    @access_token.stubs(:token)
-    @access_token.stubs(:expires?)
-    @access_token.stubs(:expires_at)
-    @access_token.stubs(:refresh_token)
-    strategy.stubs(:access_token).returns(@access_token)
-  end
-
-  test 'returns a Hash' do
-    assert_kind_of Hash, strategy.credentials
-  end
-
-  test 'returns the token' do
-    @access_token.stubs(:token).returns('123')
-    assert_equal '123', strategy.credentials['token']
-  end
-end

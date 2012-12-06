@@ -28,7 +28,9 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/info').parsed['info'] || {}
+        @raw_info ||= access_token.get('/info').parsed || {}
+        @raw_info = @raw_info['info'] if !@raw_info['info'].nil?
+        @raw_info
       end
 
       private

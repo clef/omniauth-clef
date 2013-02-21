@@ -5,9 +5,10 @@ module OmniAuth
   module Strategies
     class Clef < OmniAuth::Strategies::OAuth2
 
-      option :name, "Clef"
+      option :name, "clef"
       option :client_options, {
         :site => 'https://clef.io/api/v1',
+        :request_url => "https://clef.io/iframes/qr",
         :token_url => 'authorize'
       }
       option :provider_ignores_state, true
@@ -31,6 +32,13 @@ module OmniAuth
         hash = {}
         hash['raw_info'] = raw_info unless skip_info?
         prune! hash
+      end
+
+      def request_phase
+        url = options.client_options.request_url
+        url << "?app_id=#{options.client_id}"
+        url << "&redirect_url=#{callback_url}"
+        redirect url
       end
 
       def build_access_token

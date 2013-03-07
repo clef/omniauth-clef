@@ -30,6 +30,11 @@ module OmniAuth
       extra do
         hash = {}
         hash['raw_info'] = raw_info unless skip_info?
+        if raw_info['first_name'] && raw_info['last_name']
+          hash['raw_info']['name'] = "#{raw_info['first_name']} #{raw_info['last_name']}"
+        elsif raw_info['first_name']
+          hash['raw_info']['name'] = raw_info['first_name']
+        end
         prune! hash
       end
 

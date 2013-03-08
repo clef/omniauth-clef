@@ -50,6 +50,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
       :id => '1234567',
       :first_name => 'Clef',
       :last_name => 'User',
+      :name => 'Clef User' # only included if first name is included
       :email => 'test@example.com',
       :phone_number => '2021119999'
     }

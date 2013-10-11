@@ -2,8 +2,6 @@
 
 The official Clef OAuth2 Strategy for OmniAuth 1.0.
 
-For details on the client side authentication scheme for Clef, refer to the documentation at: http://docs.clef.io
-
 ## Installing
 
 Add to your `Gemfile`:

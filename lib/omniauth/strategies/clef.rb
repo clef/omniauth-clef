@@ -10,7 +10,6 @@ module OmniAuth
         :request_url => "https://clef.io/iframes/qr",
         :token_url => 'authorize'
       }
-      option :provider_ignores_state, true
       option :auth_token_params, {
         param_name: 'access_token',
         mode: :query
